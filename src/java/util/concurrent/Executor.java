@@ -39,10 +39,12 @@ package java.util.concurrent;
  * An object that executes submitted {@link Runnable} tasks. This
  * interface provides a way of decoupling task submission from the
  * mechanics of how each task will be run, including details of thread
- * use, scheduling, etc.  An {@code Executor} is normally used
- * instead of explicitly creating threads. For example, rather than
- * invoking {@code new Thread(new(RunnableTask())).start()} for each
- * of a set of tasks, you might use:
+ * use, scheduling, etc.
+ * //Executor是用来创造线程的，而不是唤醒线程
+ * An {@code Executor} is normally used instead of explicitly creating threads.
+ * rather than invoking {@code new Thread(new(RunnableTask())).start()} for each
+ * of a set of tasks,
+ * you might use:
  *
  * <pre>
  * Executor executor = <em>anExecutor</em>;
@@ -78,7 +80,7 @@ package java.util.concurrent;
  * limitation on how and when tasks are scheduled.  The executor below
  * serializes the submission of tasks to a second executor,
  * illustrating a composite executor.
- *
+ * //流水席线程，利用双端队列来实现对任务的不停执行
  *  <pre> {@code
  * class SerialExecutor implements Executor {
  *   final Queue<Runnable> tasks = new ArrayDeque<Runnable>();

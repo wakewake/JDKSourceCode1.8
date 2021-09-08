@@ -44,9 +44,9 @@ import java.util.Collection;
  *
  * <p>An {@code ExecutorService} can be shut down, which will cause
  * it to reject new tasks.  Two different methods are provided for
- * shutting down an {@code ExecutorService}. The {@link #shutdown}
- * method will allow previously submitted tasks to execute before
- * terminating, while the {@link #shutdownNow} method prevents waiting
+ * shutting down an {@code ExecutorService}.
+ * The {@link #shutdown} method will allow previously submitted tasks to execute before terminating,
+ * while the {@link #shutdownNow} method prevents waiting
  * tasks from starting and attempts to stop currently executing tasks.
  * Upon termination, an executor has no tasks actively executing, no
  * tasks awaiting execution, and no new tasks can be submitted.  An
@@ -100,7 +100,7 @@ import java.util.Collection;
  *     // read and service request on socket
  *   }
  * }}</pre>
- *
+ * // shutdown 拒绝接下来到来的任务，shutdownnow必要的时候，取消一切任务
  * The following method shuts down an {@code ExecutorService} in two phases,
  * first by calling {@code shutdown} to reject incoming tasks, and then
  * calling {@code shutdownNow}, if necessary, to cancel any lingering tasks:

@@ -1,33 +1,5 @@
 /*
  * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
-
-/*
- *
- *
- *
- *
- *
  * Written by Doug Lea with assistance from members of JCP JSR-166
  * Expert Group and released to the public domain, as explained at
  * http://creativecommons.org/publicdomain/zero/1.0/
@@ -65,7 +37,7 @@ package java.util.concurrent;
  * <p>The {@link Executors} class provides convenient factory methods for
  * the ScheduledExecutorService implementations provided in this package.
  *
- * <h3>Usage Example</h3>
+ * Usage Example
  *
  * Here is a class with a method that sets up a ScheduledExecutorService
  * to beep every ten seconds for an hour:
@@ -126,6 +98,9 @@ public interface ScheduledExecutorService extends ExecutorService {
     public <V> ScheduledFuture<V> schedule(Callable<V> callable,
                                            long delay, TimeUnit unit);
 
+
+    //scheduleAtFixedRate是间隔一段时间就启动一次
+    //scheduleWithFixedDelay是自己一个任务结束一段时间后开始下一个任务
     /**
      * Creates and executes a periodic action that becomes enabled first
      * after the given initial delay, and subsequently with the given
@@ -133,10 +108,10 @@ public interface ScheduledExecutorService extends ExecutorService {
      * {@code initialDelay} then {@code initialDelay+period}, then
      * {@code initialDelay + 2 * period}, and so on.
      * If any execution of the task
-     * encounters an exception, subsequent executions are suppressed.
+     * encounters an exception, subsequent executions are suppressed.//遇到异常，后面的定时任务就结束了
      * Otherwise, the task will only terminate via cancellation or
      * termination of the executor.  If any execution of this task
-     * takes longer than its period, then subsequent executions
+     * takes longer than its period, then subsequent executions//任务的执行时间比给定期限更长时，任务执行完下一份任务才开始执行
      * may start late, but will not concurrently execute.
      *
      * @param command the task to execute

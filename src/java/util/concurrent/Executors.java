@@ -64,7 +64,7 @@ public class Executors {
      * engage in, task processing. The actual number of threads may
      * grow and shrink dynamically. A work-stealing pool makes no
      * guarantees about the order in which submitted tasks are
-     * executed.
+     * executed.不保证提交的任务的执行顺序
      *
      * @param parallelism the targeted parallelism level
      * @return the newly created thread pool
