@@ -71,10 +71,10 @@ import sun.misc.Unsafe;
  * does not &quot;understand&quot; these differences except in the
  * mechanical sense that when a shared mode acquire succeeds, the next
  * waiting thread (if one exists) must also determine whether it can
- * acquire as well. Threads waiting in the different modes share the
- * same FIFO queue. Usually, implementation subclasses support only
- * one of these modes, but both can come into play for example in a
- * {@link ReadWriteLock}. Subclasses that support only exclusive or
+ * acquire as well.
+ * Threads waiting in the different modes share the same FIFO queue. Usually, implementation subclasses support only
+ * one of these modes,
+ * but both can come into play for example in a {@link ReadWriteLock}. Subclasses that support only exclusive or
  * only shared modes need not define the methods supporting the unused mode.
  *
  * <p>This class defines a nested {@link ConditionObject} class that
@@ -96,13 +96,10 @@ import sun.misc.Unsafe;
  * using an {@code AbstractQueuedSynchronizer} for their
  * synchronization mechanics.
  *
- * <p>Serialization of this class stores only the underlying atomic
- * integer maintaining state, so deserialized objects have empty
- * thread queues. Typical subclasses requiring serializability will
- * define a {@code readObject} method that restores this to a known
+ * <p>Serialization of this class stores only the underlying atomic integer maintaining state,
+ * so deserialized objects have empty thread queues.
+ * Typical subclasses requiring serializability will define a {@code readObject} method that restores this to a known
  * initial state upon deserialization.
- *
- * <h3>Usage</h3>
  *
  * <p>To use this class as the basis of a synchronizer, redefine the
  * following methods, as applicable, by inspecting and/or modifying
@@ -124,15 +121,8 @@ import sun.misc.Unsafe;
  * means of using this class. All other methods are declared
  * {@code final} because they cannot be independently varied.
  *
- * <p>You may also find the inherited methods from {@link
- * AbstractOwnableSynchronizer} useful to keep track of the thread
- * owning an exclusive synchronizer.  You are encouraged to use them
- * -- this enables monitoring and diagnostic tools to assist users in
- * determining which threads hold locks.
- *
- * <p>Even though this class is based on an internal FIFO queue, it
- * does not automatically enforce FIFO acquisition policies.  The core
- * of exclusive synchronization takes the form:
+ * <p>Even though this class is based on an internal FIFO queue, it does not automatically enforce FIFO acquisition policies.
+ * The core of exclusive synchronization takes the form:
  *
  * <pre>
  * Acquire:
@@ -146,10 +136,10 @@ import sun.misc.Unsafe;
  *        <em>unblock the first queued thread</em>;
  * </pre>
  *
- * (Shared mode is similar but may involve cascading signals.)
+ * (Shared mode is similar but may involve cascading 级联 signals.)
  *
  * <p id="barging">Because checks in acquire are invoked before
- * enqueuing, a newly acquiring thread may <em>barge</em> ahead of
+ * enqueuing, a newly acquiring thread may <em>barge 闯入</em> ahead of
  * others that are blocked and queued.  However, you can, if desired,
  * define {@code tryAcquire} and/or {@code tryAcquireShared} to
  * disable barging by internally invoking one or more of the inspection
@@ -165,9 +155,9 @@ import sun.misc.Unsafe;
  * While this is not guaranteed to be fair or starvation-free, earlier
  * queued threads are allowed to recontend before later queued
  * threads, and each recontention has an unbiased chance to succeed
- * against incoming threads.  Also, while acquires do not
- * &quot;spin&quot; in the usual sense, they may perform multiple
- * invocations of {@code tryAcquire} interspersed with other
+ * against incoming threads.
+ * Also, while acquires do not &quot;spin&quot; in the usual sense, they may perform multiple
+ * invocations of {@code tryAcquire} interspersed 穿插 with other
  * computations before blocking.  This gives most of the benefits of
  * spins when exclusive synchronization is only briefly held, without
  * most of the liabilities when it isn't. If so desired, you can
@@ -179,21 +169,17 @@ import sun.misc.Unsafe;
  * <p>This class provides an efficient and scalable basis for
  * synchronization in part by specializing its range of use to
  * synchronizers that can rely on {@code int} state, acquire, and
- * release parameters, and an internal FIFO wait queue. When this does
- * not suffice, you can build synchronizers from a lower level using
+ * release parameters, and an internal FIFO wait queue.
+ * When this does not suffice, you can build synchronizers from a lower level using
  * {@link java.util.concurrent.atomic atomic} classes, your own custom
- * {@link java.util.Queue} classes, and {@link LockSupport} blocking
- * support.
+ * {@link java.util.Queue} classes, and {@link LockSupport} blocking support.
  *
- * <h3>Usage Examples</h3>
  *
- * <p>Here is a non-reentrant mutual exclusion lock class that uses
- * the value zero to represent the unlocked state, and one to
- * represent the locked state. While a non-reentrant lock
- * does not strictly require recording of the current owner
- * thread, this class does so anyway to make usage easier to monitor.
- * It also supports conditions and exposes
- * one of the instrumentation methods:
+ * <p>Here is a non-reentrant 可重入的 mutual exclusion lock class that uses
+ * the value zero to represent the unlocked state, and one to represent the locked state.
+ * While a non-reentrant lock does not strictly require recording of the current owner thread,
+ * this class does so anyway to make usage easier to monitor.
+ * It also supports conditions and exposes one of the instrumentation methods:
  *
  *  <pre> {@code
  * class Mutex implements Lock, java.io.Serializable {
@@ -253,11 +239,9 @@ import sun.misc.Unsafe;
  *   }
  * }}</pre>
  *
- * <p>Here is a latch class that is like a
- * {@link java.util.concurrent.CountDownLatch CountDownLatch}
- * except that it only requires a single {@code signal} to
- * fire. Because a latch is non-exclusive, it uses the {@code shared}
- * acquire and release methods.
+ * <p>Here is a latch class that is like a {@link java.util.concurrent.CountDownLatch CountDownLatch}
+ * except that it only requires a single {@code signal} to fire. Because a latch is non-exclusive,
+ * it uses the {@code shared} acquire and release methods.
  *
  *  <pre> {@code
  * class BooleanLatch {
@@ -282,13 +266,14 @@ import sun.misc.Unsafe;
  *     sync.acquireSharedInterruptibly(1);
  *   }
  * }}</pre>
- *
+ * * <p>You may also find the inherited methods from {@link AbstractOwnableSynchronizer} useful to keep track of the
+ * thread owning an exclusive synchronizer.  You are encouraged to use them
+ *  * -- this enables monitoring and diagnostic tools to assist users in determining which threads hold locks.
+ *  *
  * @since 1.5
  * @author Doug Lea
  */
-public abstract class AbstractQueuedSynchronizer
-    extends AbstractOwnableSynchronizer
-    implements java.io.Serializable {
+public abstract class AbstractQueuedSynchronizer extends AbstractOwnableSynchronizer implements java.io.Serializable {
 
     private static final long serialVersionUID = 7373984972572414691L;
 
@@ -397,33 +382,23 @@ public abstract class AbstractQueuedSynchronizer
 
         /**
          * Status field, taking on only the values:
-         *   SIGNAL:     The successor of this node is (or will soon be)
-         *               blocked (via park), so the current node must
-         *               unpark its successor when it releases or
-         *               cancels. To avoid races, acquire methods must
-         *               first indicate they need a signal,
-         *               then retry the atomic acquire, and then,
-         *               on failure, block.
+         *   SIGNAL:     The successor of this node is (or will soon be) blocked (via park),
+         *               so the current node must unpark its successor when it releases or cancels.
+         *               To avoid races, acquire methods must first indicate they need a signal,
+         *               then retry the atomic acquire, and then, on failure, block.
          *   CANCELLED:  This node is cancelled due to timeout or interrupt.
          *               Nodes never leave this state. In particular,
          *               a thread with cancelled node never again blocks.
          *   CONDITION:  This node is currently on a condition queue.
-         *               It will not be used as a sync queue node
-         *               until transferred, at which time the status
-         *               will be set to 0. (Use of this value here has
-         *               nothing to do with the other uses of the
-         *               field, but simplifies mechanics.)
-         *   PROPAGATE:  A releaseShared should be propagated to other
-         *               nodes. This is set (for head node only) in
-         *               doReleaseShared to ensure propagation
-         *               continues, even if other operations have
-         *               since intervened.
+         *               It will not be used as a sync queue node until transferred, at which time the status will be set to 0.
+         *               (Use of this value here has nothing to do with the other uses of the field, but simplifies mechanics.)
+         *   PROPAGATE:  A releaseShared should be propagated to other nodes. This is set (for head node only) in
+         *               doReleaseShared to ensure propagation continues, even if other operations have since intervened.
          *   0:          None of the above
          *
          * The values are arranged numerically to simplify use.
-         * Non-negative values mean that a node doesn't need to
-         * signal. So, most code doesn't need to check for particular
-         * values, just for sign.
+         * Non-negative values mean that a node doesn't need to signal.
+         * So, most code doesn't need to check for particular values, just for sign.
          *
          * The field is initialized to 0 for normal sync nodes, and
          * CONDITION for condition nodes.  It is modified using CAS
@@ -642,6 +617,7 @@ public abstract class AbstractQueuedSynchronizer
          * fails or if status is changed by waiting thread.
          */
         int ws = node.waitStatus;
+        //本身任务完成了，原来是需要唤醒的，现在结束了，置换到0
         if (ws < 0)
             compareAndSetWaitStatus(node, ws, 0);
 
@@ -653,11 +629,13 @@ public abstract class AbstractQueuedSynchronizer
          */
         Node s = node.next;
         if (s == null || s.waitStatus > 0) {
+            //当下一个不需要唤醒的时候，从尾节点开始往前一直找，直到找到上一个节点位置
             s = null;
             for (Node t = tail; t != null && t != node; t = t.prev)
                 if (t.waitStatus <= 0)
                     s = t;
         }
+        //如果下一个不等null 并且其需要唤醒，
         if (s != null)
             LockSupport.unpark(s.thread);
     }
@@ -669,14 +647,11 @@ public abstract class AbstractQueuedSynchronizer
      */
     private void doReleaseShared() {
         /*
-         * Ensure that a release propagates, even if there are other
-         * in-progress acquires/releases.  This proceeds in the usual
-         * way of trying to unparkSuccessor of head if it needs
-         * signal. But if it does not, status is set to PROPAGATE to
-         * ensure that upon release, propagation continues.
-         * Additionally, we must loop in case a new node is added
-         * while we are doing this. Also, unlike other uses of
-         * unparkSuccessor, we need to know if CAS to reset status
+         * Ensure that a release propagates, even if there are other in-progress acquires/releases.
+         * This proceeds in the usual way of trying to unparkSuccessor of head if it needs signal.
+         * But if it does not, status is set to PROPAGATE to ensure that upon release, propagation continues.
+         * Additionally, we must loop in case a new node is added while we are doing this.
+         * Also, unlike other uses of unparkSuccessor, we need to know if CAS to reset status
          * fails, if so rechecking.
          */
         for (;;) {
@@ -724,8 +699,7 @@ public abstract class AbstractQueuedSynchronizer
          * racing acquires/releases, so most need signals now or soon
          * anyway.
          */
-        if (propagate > 0 || h == null || h.waitStatus < 0 ||
-            (h = head) == null || h.waitStatus < 0) {
+        if (propagate > 0 || h == null || h.waitStatus < 0 || (h = head) == null || h.waitStatus < 0) {
             Node s = node.next;
             if (s == null || s.isShared())
                 doReleaseShared();
@@ -785,8 +759,8 @@ public abstract class AbstractQueuedSynchronizer
 
     /**
      * Checks and updates status for a node that failed to acquire.
-     * Returns true if thread should block. This is the main signal
-     * control in all acquire loops.  Requires that pred == node.prev.
+     * Returns true if thread should block.
+     * This is the main signal control in all acquire loops.  Requires that pred == node.prev.
      *
      * @param pred node's predecessor holding status
      * @param node the node
@@ -794,20 +768,24 @@ public abstract class AbstractQueuedSynchronizer
      */
     private static boolean shouldParkAfterFailedAcquire(Node pred, Node node) {
         int ws = pred.waitStatus;
+        //前节点为signal时，下一个节点应该park
         if (ws == Node.SIGNAL)
             /*
              * This node has already set status asking a release
              * to signal it, so it can safely park.
              */
             return true;
+        //找到符合要求的前置节点
         if (ws > 0) {
             /*
              * Predecessor was cancelled. Skip over predecessors and
              * indicate retry.
              */
             do {
+                //其前节点不断向前，并同步其前节点等于前进的前节点
                 node.prev = pred = pred.prev;
             } while (pred.waitStatus > 0);
+            //得到符合要求的前节点，将其后置节点置为起始节点
             pred.next = node;
         } else {
             /*
@@ -862,7 +840,7 @@ public abstract class AbstractQueuedSynchronizer
                 final Node p = node.predecessor();
                 if (p == head && tryAcquire(arg)) {
                     setHead(node);
-                    p.next = null; // help GC
+                    p.next = null; // help GC 因为定义了final
                     failed = false;
                     return interrupted;
                 }
@@ -880,8 +858,7 @@ public abstract class AbstractQueuedSynchronizer
      * Acquires in exclusive interruptible mode.
      * @param arg the acquire argument
      */
-    private void doAcquireInterruptibly(int arg)
-        throws InterruptedException {
+    private void doAcquireInterruptibly(int arg) throws InterruptedException {
         final Node node = addWaiter(Node.EXCLUSIVE);
         boolean failed = true;
         try {
@@ -1185,8 +1162,8 @@ public abstract class AbstractQueuedSynchronizer
     /**
      * Acquires in exclusive mode, ignoring interrupts.  Implemented
      * by invoking at least once {@link #tryAcquire},
-     * returning on success.  Otherwise the thread is queued, possibly
-     * repeatedly blocking and unblocking, invoking {@link
+     * returning on success.
+     * Otherwise the thread is queued, possibly repeatedly blocking and unblocking, invoking {@link
      * #tryAcquire} until success.  This method can be used
      * to implement method {@link Lock#lock}.
      *
@@ -1350,8 +1327,8 @@ public abstract class AbstractQueuedSynchronizer
     /**
      * Queries whether any threads are waiting to acquire. Note that
      * because cancellations due to interrupts and timeouts may occur
-     * at any time, a {@code true} return does not guarantee that any
-     * other thread will ever acquire.
+     * at any time,
+     * a {@code true} return does not guarantee that any other thread will ever acquire.
      *
      * <p>In this implementation, this operation returns in
      * constant time.
@@ -1396,11 +1373,9 @@ public abstract class AbstractQueuedSynchronizer
      */
     private Thread fullGetFirstQueuedThread() {
         /*
-         * The first node is normally head.next. Try to get its
-         * thread field, ensuring consistent reads: If thread
-         * field is nulled out or s.prev is no longer head, then
-         * some other thread(s) concurrently performed setHead in
-         * between some of our reads. We try this twice before
+         * The first node is normally head.next. Try to get its thread field, ensuring consistent reads:
+         * If thread field is nulled out or s.prev is no longer head, then
+         * some other thread(s) concurrently performed setHead in between some of our reads. We try this twice before
          * resorting to traversal.
          */
         Node h, s;
@@ -1418,7 +1393,7 @@ public abstract class AbstractQueuedSynchronizer
          * traversing from tail back to head to find first,
          * guaranteeing termination.
          */
-
+        //又是从尾巴节点开始不断往前移动
         Node t = tail;
         Thread firstThread = null;
         while (t != null && t != head) {
