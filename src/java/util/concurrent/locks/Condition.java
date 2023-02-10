@@ -48,8 +48,8 @@ import java.util.Date;
  * monitor methods.
  *
  * <p>Conditions (also known as <em>condition queues</em> or
- * <em>condition variables</em>) provide a means for one thread to
- * suspend execution (to &quot;wait&quot;) until notified by another
+ * <em>condition variables</em>)
+ * provide a means for one thread to suspend execution (to &quot;wait&quot;) until notified by another
  * thread that some state condition may now be true.  Because access
  * to this shared state information occurs in different threads, it
  * must be protected, so a lock of some form is associated with the
@@ -116,28 +116,23 @@ import java.util.Date;
  * sample usage class.)
  *
  * <p>A {@code Condition} implementation can provide behavior and semantics
- * that is
- * different from that of the {@code Object} monitor methods, such as
- * guaranteed ordering for notifications, or not requiring a lock to be held
- * when performing notifications.
- * If an implementation provides such specialized semantics then the
- * implementation must document those semantics.
+ * that is different from that of the {@code Object} monitor methods,
+ * such as guaranteed ordering for notifications, or not requiring a lock to be held when performing notifications.
+ * If an implementation provides such specialized semantics then the implementation must document those semantics.
  *
- * <p>Note that {@code Condition} instances are just normal objects and can
- * themselves be used as the target in a {@code synchronized} statement,
- * and can have their own monitor {@link Object#wait wait} and
- * {@link Object#notify notification} methods invoked.
+ * <p>Note that {@code Condition} instances are just normal objects and can themselves be used as the target in a {@code synchronized} statement,
+ * and can have their own monitor {@link Object#wait wait} and {@link Object#notify notification} methods invoked.
  * Acquiring the monitor lock of a {@code Condition} instance, or using its
  * monitor methods, has no specified relationship with acquiring the
  * {@link Lock} associated with that {@code Condition} or the use of its
  * {@linkplain #await waiting} and {@linkplain #signal signalling} methods.
+ *
  * It is recommended that to avoid confusion you never use {@code Condition}
  * instances in this way, except perhaps within their own implementation.
  *
  * <p>Except where noted, passing a {@code null} value for any parameter
  * will result in a {@link NullPointerException} being thrown.
- *
- * <h3>Implementation Considerations</h3>
+ *Implementation Considerations
  *
  * <p>When waiting upon a {@code Condition}, a &quot;<em>spurious
  * wakeup</em>&quot; is permitted to occur, in
@@ -149,8 +144,7 @@ import java.util.Date;
  * recommended that applications programmers always assume that they can
  * occur and so always wait in a loop.
  *
- * <p>The three forms of condition waiting
- * (interruptible, non-interruptible, and timed) may differ in their ease of
+ * <p>The three forms of condition waiting (interruptible, non-interruptible, and timed) may differ in their ease of
  * implementation on some platforms and in their performance characteristics.
  * In particular, it may be difficult to provide these features and maintain
  * specific semantics such as ordering guarantees.
@@ -182,9 +176,8 @@ public interface Condition {
      * Causes the current thread to wait until it is signalled or
      * {@linkplain Thread#interrupt interrupted}.
      *
-     * <p>The lock associated with this {@code Condition} is atomically
-     * released and the current thread becomes disabled for thread scheduling
-     * purposes and lies dormant until <em>one</em> of four things happens:
+     * <p>The lock associated with this {@code Condition} is atomically released and the current thread becomes disabled for thread scheduling purposes and lies dormant
+     * until <em>one</em> of four things happens:
      * <ul>
      * <li>Some other thread invokes the {@link #signal} method for this
      * {@code Condition} and the current thread happens to be chosen as the

@@ -91,23 +91,17 @@ abstract class Striped64 extends Number {
      * using a secondary hash (Marsaglia XorShift) to try to find a
      * free slot.
      *
-     * The table size is capped because, when there are more threads
-     * than CPUs, supposing that each thread were bound to a CPU,
-     * there would exist a perfect hash function mapping threads to
-     * slots that eliminates collisions. When we reach capacity, we
-     * search for this mapping by randomly varying the hash codes of
-     * colliding threads.  Because search is random, and collisions
-     * only become known via CAS failures, convergence can be slow,
-     * and because threads are typically not bound to CPUS forever,
-     * may not occur at all. However, despite these limitations,
-     * observed contention rates are typically low in these cases.
+     * The table size is capped because, when there are more threads than CPUs, supposing that each thread were bound to a CPU,
+     * there would exist a perfect hash function mapping threads to slots that eliminates collisions.
+     * When we reach capacity, we search for this mapping by randomly varying the hash codes of colliding threads.
+     * Because search is random, and collisions only become known via CAS failures, convergence can be slow,
+     * and because threads are typically not bound to CPUS forever, may not occur at all.
+     * However, despite these limitations, observed contention rates are typically low in these cases.
      *
-     * It is possible for a Cell to become unused when threads that
-     * once hashed to it terminate, as well as in the case where
-     * doubling the table causes no thread to hash to it under
-     * expanded mask.  We do not try to detect or remove such cells,
-     * under the assumption that for long-running instances, observed
-     * contention levels will recur, so the cells will eventually be
+     * It is possible for a Cell to become unused when threads that once hashed to it terminate,
+     * as well as in the case where doubling the table causes no thread to hash to it under expanded mask.
+     * We do not try to detect or remove such cells, under the assumption that for long-running instances,
+     * observed contention levels will recur, so the cells will eventually be
      * needed again; and for short-lived ones, it does not matter.
      */
 

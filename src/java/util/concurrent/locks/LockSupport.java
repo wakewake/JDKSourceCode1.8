@@ -37,8 +37,7 @@ package java.util.concurrent.locks;
 import sun.misc.Unsafe;
 
 /**
- * Basic thread blocking primitives for creating locks and other
- * synchronization classes.
+ * Basic thread blocking primitives for creating locks and other synchronization classes.
  *
  * <p>This class associates, with each thread that uses it, a permit
  * (in the sense of the {@link java.util.concurrent.Semaphore
@@ -48,10 +47,9 @@ import sun.misc.Unsafe;
  * available, if it was not already available. (Unlike with Semaphores
  * though, permits do not accumulate. There is at most one.)
  *
- * <p>Methods {@code park} and {@code unpark} provide efficient
- * means of blocking and unblocking threads that do not encounter the
- * problems that cause the deprecated methods {@code Thread.suspend}
- * and {@code Thread.resume} to be unusable for such purposes: Races
+ * <p>Methods {@code park} and {@code unpark} provide efficient means of blocking and unblocking threads that
+ * do not encounter the problems that cause the deprecated methods {@code Thread.suspend} and {@code Thread.resume} to be unusable
+ * for such purposes: Races
  * between one thread invoking {@code park} and another thread trying
  * to {@code unpark} it will preserve liveness, due to the
  * permit. Additionally, {@code park} will return if the caller's
@@ -142,13 +140,11 @@ public class LockSupport {
     }
 
     /**
-     * Disables the current thread for thread scheduling purposes unless the
-     * permit is available.
+     * Disables the current thread for thread scheduling purposes unless the permit is available.
      *
-     * <p>If the permit is available then it is consumed and the call returns
-     * immediately; otherwise
-     * the current thread becomes disabled for thread scheduling
-     * purposes and lies dormant until one of three things happens:
+     * <p>If the permit is available then it is consumed and the call returns immediately;
+     * otherwise the current thread becomes disabled for thread scheduling purposes and lies dormant
+     * until one of three things happens:
      *
      * <ul>
      * <li>Some other thread invokes {@link #unpark unpark} with the
